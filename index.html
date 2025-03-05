@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerador de Fórmula Notion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin: 10px 0;
+        }
+        input {
+            width: 200px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Gerador de Fórmula Notion</h2>
+    <div>
+        <label>Cole sua fórmula atual:</label><br>
+        <textarea id="formulaAtual"></textarea>
+    </div>
+    <div>
+        <label>Nova data (formato DD/M):</label><br>
+        <input type="text" id="novaData" placeholder="Ex: 05/3">
+        <button onclick="gerarFormula()">Gerar Nova Fórmula</button>
+    </div>
+    <div>
+        <label>Resultado:</label><br>
+        <textarea id="resultado" readonly></textarea>
+    </div>
+
+    <script>
+        function gerarFormula() {
+            const formulaAtual = document.getElementById('formulaAtual').value;
+            const novaData = document.getElementById('novaData').value;
+            
+            const template = `if(contains(prop("DATA"), "Tarefa completa"), "✅", "") +
+if(contains(prop("DATA"), "Tarefa incompleta"), "⚠️", "") +
+if(contains(prop("DATA"), "Tarefa não entregue"), "❌", "") +
+if(contains(prop("DATA"), "Ausente"), "🫥", "") +
+if(contains(prop("DATA"), "Conversa excessiva"), "💬", "") +
+if(contains(prop("DATA"), "Sem material"), "📓", "") +
+if(contains(prop("DATA"), "Destaque"), "🌟", "") +
+if(contains(prop("DATA"), "Desinteresse"), "👽", "") +
+if(contains(prop("DATA"), "Caderno incompleto"), "📒", "") +
+if(contains(prop("DATA"), "Uso de celular"), "📵", "")`;
+
+            const novoBloco = template.replaceAll("DATA", novaData);
+            
+            document.getElementById('resultado').value = formulaAtual + " +\n" + novoBloco;
+        }
+    </script>
+</body>
+</html>
